@@ -1,0 +1,42 @@
+entity Category {
+	categoryName String,
+    orderIndex Integer
+}
+
+
+entity Dish {
+	dishName String,
+    description String,
+    orderIndex Integer,
+    price Integer,
+    disable Boolean
+}
+
+relationship OneToMany {
+	Dish to Category{categoryId}
+}
+
+entity OrderItem {
+    itemCount Integer
+}
+
+relationship OneToMany {
+	OrderItem to Dish{dishId}
+}
+
+entity Order {
+    orderDate LocalDate
+}
+
+relationship OneToMany {
+	OrderItem to Order{orderId}
+}
+
+
+// Set pagination options
+paginate Category, Dish, OrderItem with infinite-scroll
+paginate Order with pagination
+
+// Set service options to all except few
+service all with serviceImpl except OrderItem
+
